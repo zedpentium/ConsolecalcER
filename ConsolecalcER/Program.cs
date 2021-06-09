@@ -14,7 +14,7 @@ namespace ConsolecalcER
                 showMenu = Menyn();
             }
 
-            static bool Menyn() // själva menyn
+            static bool Menyn() // själva menyn & val
             {
                 Console.Clear();
                 Console.WriteLine("----* Välkommen till Eric R's Konsol-kalkylator *----\n");
