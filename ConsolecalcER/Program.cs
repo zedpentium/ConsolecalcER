@@ -8,7 +8,7 @@ namespace ConsolecalcER
         {
          
 
-            bool showMenu = true; // hålla smidigt igång menyn
+            bool showMenu = true; // hålla smidigt igång menyn tills user trycker 0 i menyn
             while (showMenu)
             {
                 showMenu = Menyn();
