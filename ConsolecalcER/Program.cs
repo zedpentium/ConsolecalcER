@@ -6,48 +6,57 @@ namespace ConsolecalcER
     {
         static void Main(string[] args)
         {
-         
+
 
             bool showMenu = true; // hålla smidigt igång menyn tills user trycker 0 i menyn
             while (showMenu)
             {
-                showMenu = Menyn();
-            }
-
-            static bool Menyn() // själva menyn & val
-            {
-                Console.Clear();
-                Console.WriteLine("----* Välkommen till Eric R's Konsol-kalkylator *----\n");
-                Console.WriteLine("Välj räknesätt:");
-                Console.WriteLine();
-                Console.WriteLine("1) Addition");
-                Console.WriteLine("2) Subtraktion");
-                Console.WriteLine("3) Division");
-                Console.WriteLine("4) Multiplikation");
-                Console.WriteLine("0) Avsluta programmet");
-
-                Console.Write("\r\nSkriv in NR på menyval & tryck enter: ");
-
-                switch (Console.ReadLine())
+                try
                 {
-                    case "1":
-                        MAddition();
-                        return true;
-                    case "2":
-                        MSubtraktion();
-                        return true;
-                    case "3":
-                        MDivision();
-                        return true;
-                    case "4":
-                        MMultiplikation();
-                        return true;
-                    case "0":
-                        return false;
-                    default:
-                        return true;
+
+                    Console.Clear();
+                    Console.WriteLine("----* Välkommen till Eric R's Konsol-kalkylator *----\n");
+                    Console.WriteLine("Välj räknesätt:");
+                    Console.WriteLine();
+                    Console.WriteLine("1) Addition");
+                    Console.WriteLine("2) Subtraktion");
+                    Console.WriteLine("3) Division");
+                    Console.WriteLine("4) Multiplikation");
+                    Console.WriteLine("0) Avsluta programmet");
+
+                    Console.Write("\r\nSkriv in NR på menyval & tryck enter: ");
+
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            MAddition();
+                            break;
+                        case "2":
+                            MSubtraktion();
+                            break;
+                        case "3":
+                            MDivision();
+                            break;
+                        case "4":
+                            MMultiplikation();
+                            break;
+                        case "0":
+                            showMenu = false;
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            //Console.WriteLine("Det är inte ett giltigt meny nummer!");
+                            break;
+                    }
+
+                } //End try
+
+                catch
+                {
+                    //Console.WriteLine("Det är inte ett giltigt meny nummer!");
                 }
-            }
+
+            } // End while
 
         } // end main
 
@@ -68,6 +77,53 @@ namespace ConsolecalcER
             return inputTal;
         }
 
+        static void DoMathWithInput(int mChoice) // Method to minimize repeating code for each math choice
+        {
+            Console.WriteLine("\nSkriv in första talet & tryck Enter");
+            double userTal1 = GetInputFromUser();
+
+            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
+            double userTal2 = GetInputFromUser();
+
+            string strMathSign = "";
+            double intSum = 0;
+
+            if (mChoice == 1)
+                {
+                strMathSign = "+";
+                intSum = userTal1 + userTal2;
+                }
+            else if (mChoice == 2)
+                {
+                strMathSign = "-";
+                intSum = userTal1 - userTal2;
+            }
+            else if (mChoice == 3)
+                {
+                while (userTal2 == 0)
+                {
+                    //Console.WriteLine("\nSkriv in vad " + userTal1 + " skall delas med, & tryck Enter");
+                    //userTal2 = GetInputFromUser();
+
+                    if (userTal2 == 0)
+                    {
+                        Console.WriteLine("OBS! Du kan inte dela med talet 0.\nVar god skriv in ett tal:");
+                        userTal2 = GetInputFromUser();
+                    }
+                }
+                strMathSign = "/";
+                intSum = userTal1 / userTal2;
+            }
+            else if (mChoice == 4)
+                {
+                strMathSign = "*";
+                intSum = userTal1 * userTal2;
+            }
+
+            Console.WriteLine($"\nResultat: {userTal1} {strMathSign} {userTal2} = {intSum}");
+
+        }
+
         static void DoneFunction() // 2 blanka rader och sedan vänta på enter-tryck för att visa menyn 
         {
             Console.WriteLine("\n\n");
@@ -82,13 +138,7 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Addition");
 
-            Console.WriteLine("\nSkriv in första talet & tryck Enter");
-            double userTal1 = GetInputFromUser();
-
-            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
-            double userTal2 = GetInputFromUser();
-
-            Console.WriteLine("\nResultat avrundat:" + userTal1 + " + " + userTal2 + " = " + (userTal1 + userTal2));
+            DoMathWithInput(1);
 
             DoneFunction();
         }
@@ -98,6 +148,10 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Subtraktion");
 
+            DoMathWithInput(2);
+
+            /*
+
             Console.WriteLine("\nSkriv in första talet & tryck Enter");
             double userTal1 = GetInputFromUser();
 
@@ -105,6 +159,7 @@ namespace ConsolecalcER
             double userTal2 = GetInputFromUser();
 
             Console.WriteLine("\nResultat avrundat:" + userTal1 + " - " + userTal2 + " = " + (userTal1 - userTal2));
+            */
 
             DoneFunction();
         }
@@ -114,6 +169,9 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Division");
 
+            DoMathWithInput(3);
+
+            /*
             Console.WriteLine("\nSkriv in ett tal & tryck Enter");
             double userTal1 = GetInputFromUser();
 
@@ -131,6 +189,7 @@ namespace ConsolecalcER
 
 
             Console.WriteLine("\nResultat avrundat: " + userTal1 + " / " + userTal2 + " = " + (userTal1 / userTal2));
+            */
 
             DoneFunction();
         }
@@ -140,6 +199,9 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Multiplikation");
 
+            DoMathWithInput(4);
+
+            /*
             Console.WriteLine("\nSkriv in första talet & tryck Enter");
             double userTal1 = GetInputFromUser();
 
@@ -147,6 +209,7 @@ namespace ConsolecalcER
             double userTal2 = GetInputFromUser();
 
             Console.WriteLine("\nResultat avrundat: " + userTal1 + " * " + userTal2 + " = " + (userTal1 * userTal2));
+            */
 
             DoneFunction();
         }
