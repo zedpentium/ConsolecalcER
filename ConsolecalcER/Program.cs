@@ -41,11 +41,11 @@ namespace ConsolecalcER
                             MMultiplikation();
                             break;
                         case "0":
-                            showMenu = false;
-                            Environment.Exit(0);
+                            showMenu = false; // stoppa switch-loopen och gå till slut av Main = slut på programmet
                             break;
                         default:
-                            //Console.WriteLine("Det är inte ett giltigt meny nummer!");
+                            Console.WriteLine("Det är inte ett giltigt meny nummer! Tryck enter och försök igen.");
+                            Console.ReadKey();
                             break;
                     }
 
@@ -53,7 +53,8 @@ namespace ConsolecalcER
 
                 catch
                 {
-                    //Console.WriteLine("Det är inte ett giltigt meny nummer!");
+                    Console.WriteLine("Det är inte ett giltigt meny nummer! Tryck enter och försök igen.");
+                    Console.ReadKey();
                 }
 
             } // End while
