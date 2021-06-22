@@ -2,7 +2,7 @@
 
 namespace ConsolecalcER
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -78,7 +78,7 @@ namespace ConsolecalcER
             return inputTal;
         }
 
-        static void DoMathWithInput(int mChoice) // Method to minimize repeating code for each math choice
+        public static void DoMathWithInput(int mChoice) // Method to minimize repeating code for each math choice
         {
             Console.WriteLine("\nSkriv in första talet & tryck Enter");
             double userTal1 = GetInputFromUser();
