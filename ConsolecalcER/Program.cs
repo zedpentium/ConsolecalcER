@@ -114,12 +114,13 @@ namespace ConsolecalcER
                 //while (userTal2 == 0)
                 //{
                 //Console.WriteLine("\nSkriv in vad " + userTal1 + " skall delas med, & tryck Enter");
-                //userTal2 = GetInputFromUser();
+
                 if (userTal2 == 0)
                 {
                     Console.WriteLine("OBS! Du kan inte dela med talet 0.\nVar god skriv in ett tal:");
                     // commented out to be able to run xunit test userTal2 = GetInputFromUserValidate();
                 }
+                //}
 
                 strMathSign = "/";
                 try
