@@ -64,13 +64,27 @@ namespace ConsolecalcER
 
         // My methods
         // Userinput, 2 tal som skall konverteras till int
-        static double GetInputFromUser()
+
+        // Get integers from user
+        public static void GetInputFromUser(int mChoice)
+        {
+            Console.WriteLine("\nSkriv in första talet & tryck Enter");
+            double userTal1 = GetInputFromUserValidate();
+
+            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
+            double userTal2 = GetInputFromUserValidate();
+
+            DoMathWithInput(mChoice, userTal1, userTal2);
+        }
+
+        // Validate the inputs from user of the above method
+        public static double GetInputFromUserValidate()
         {
             // deklarerar variabel
             double inputTal;
 
             string userInput = Console.ReadLine();
-            while (!double.TryParse(userInput, out inputTal)) // prova om userinput kan konverteras till int
+            while (!double.TryParse(userInput, out inputTal)) // prova om userinput kan konverteras till double
             {
                 Console.WriteLine("Det är inte ett tal. Var god skriv in ett heltal:");
                 userInput = Console.ReadLine();
@@ -78,60 +92,97 @@ namespace ConsolecalcER
             return inputTal;
         }
 
-        public static void DoMathWithInput(int mChoice) // Method to minimize repeating code for each math choice
+
+        // Do math with userinput userTal1 and userTal2
+        public static double DoMathWithInput(int mChoice, double userTal1, double userTal2) // Method to minimize repeating code for each math choice
         {
-            Console.WriteLine("\nSkriv in första talet & tryck Enter");
-            double userTal1 = GetInputFromUser();
-
-            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
-            double userTal2 = GetInputFromUser();
-
             string strMathSign = "";
             double intSum = 0;
 
             if (mChoice == 1)
-                {
+            {
                 strMathSign = "+";
                 intSum = userTal1 + userTal2;
-                }
+            }
             else if (mChoice == 2)
-                {
+            {
                 strMathSign = "-";
                 intSum = userTal1 - userTal2;
             }
             else if (mChoice == 3)
+            {
+                //while (userTal2 == 0)
+                //{
+                //Console.WriteLine("\nSkriv in vad " + userTal1 + " skall delas med, & tryck Enter");
+                //userTal2 = GetInputFromUser();
+                if (userTal2 == 0)
                 {
-                while (userTal2 == 0)
-                {
-                    //Console.WriteLine("\nSkriv in vad " + userTal1 + " skall delas med, & tryck Enter");
-                    //userTal2 = GetInputFromUser();
-
-                    if (userTal2 == 0)
-                    {
-                        Console.WriteLine("OBS! Du kan inte dela med talet 0.\nVar god skriv in ett tal:");
-                        userTal2 = GetInputFromUser();
-                    }
+                    Console.WriteLine("OBS! Du kan inte dela med talet 0.\nVar god skriv in ett tal:");
+                    // commented out to be able to run xunit test userTal2 = GetInputFromUserValidate();
                 }
+
                 strMathSign = "/";
-                intSum = userTal1 / userTal2;
-            }
-            else if (mChoice == 4)
+                try
                 {
+                    intSum = userTal1 / userTal2;
+                }
+                catch (DivideByZeroException)
+                {
+                    Console.WriteLine("Du kan inte dela med talet 0. Skriv in på nytt");
+                }
+
+
+            }
+
+            else if (mChoice == 4)
+            {
                 strMathSign = "*";
                 intSum = userTal1 * userTal2;
             }
 
             Console.WriteLine($"\nResultat: {userTal1} {strMathSign} {userTal2} = {intSum}");
-
+            return intSum;
         }
+
+        // Do plus or minus with input from array
+        public static double DoMathWithInput(int mChoice, double[] arrInput) // Method to minimize repeating code for each math choice
+        {
+            string strMathSign = "";
+            double intSum=0;
+
+
+            if (mChoice == 1)
+            {
+                strMathSign = "+";
+                intSum = arrInput[0];
+                for (int i1 = 1; i1 < arrInput.Length; i1++)
+                {
+                    intSum = intSum + arrInput[i1];
+                }
+            }
+            else if (mChoice == 2)
+            {
+                strMathSign = "-";
+                intSum = arrInput[0];
+                for (int i2 = 1; i2 < arrInput.Length; i2++)
+                {
+                    intSum=
+                    intSum = intSum - arrInput[i2];
+                }
+            }
+
+            //Console.WriteLine($"\nResultat: {userTal1} {strMathSign} {userTal2} = {intSum}");
+            return intSum;
+        }
+
 
         static void DoneFunction() // 2 blanka rader och sedan vänta på enter-tryck för att visa menyn 
         {
             Console.WriteLine("\n\n");
             Console.Write("\nFunktion utförd! Tryck 'Enter' för att komma till menyn...");
-            while (Console.ReadKey().Key != ConsoleKey.Enter)
-            {
-            }
+            //while (Console.ReadKey().Key != ConsoleKey.Enter)
+            //{
+            //}
         }
 
         static void MAddition() // Menyval 1
@@ -139,7 +190,7 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Addition");
 
-            DoMathWithInput(1);
+            // commented out to be able to run xunit test GetInputFromUser(1);
 
             DoneFunction();
         }
@@ -149,18 +200,7 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Subtraktion");
 
-            DoMathWithInput(2);
-
-            /*
-
-            Console.WriteLine("\nSkriv in första talet & tryck Enter");
-            double userTal1 = GetInputFromUser();
-
-            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
-            double userTal2 = GetInputFromUser();
-
-            Console.WriteLine("\nResultat avrundat:" + userTal1 + " - " + userTal2 + " = " + (userTal1 - userTal2));
-            */
+            // commented out to be able to run xunit test GetInputFromUser(2);
 
             DoneFunction();
         }
@@ -170,27 +210,8 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Division");
 
-            DoMathWithInput(3);
-
-            /*
-            Console.WriteLine("\nSkriv in ett tal & tryck Enter");
-            double userTal1 = GetInputFromUser();
-
-            double userTal2 = 0; // deklarerar variabel till 0, innför koll om userinputvärdet är värde 0
-            while (userTal2 == 0)
-            {
-                Console.WriteLine("\nSkriv in vad " + userTal1 + " skall delas med, & tryck Enter");
-                userTal2 = GetInputFromUser();
-
-                if (userTal2 == 0)
-                {
-                    Console.WriteLine("OBS! Du kan inte dela med talet 0.");
-                }
-            }
-
-
-            Console.WriteLine("\nResultat avrundat: " + userTal1 + " / " + userTal2 + " = " + (userTal1 / userTal2));
-            */
+            // commented out to be able to run xunit test
+            GetInputFromUser(3);
 
             DoneFunction();
         }
@@ -200,19 +221,12 @@ namespace ConsolecalcER
             Console.Clear();
             Console.WriteLine("Räkna Multiplikation");
 
-            DoMathWithInput(4);
-
-            /*
-            Console.WriteLine("\nSkriv in första talet & tryck Enter");
-            double userTal1 = GetInputFromUser();
-
-            Console.WriteLine("\nSkriv in andra talet & tryck Enter");
-            double userTal2 = GetInputFromUser();
-
-            Console.WriteLine("\nResultat avrundat: " + userTal1 + " * " + userTal2 + " = " + (userTal1 * userTal2));
-            */
+            // commented out to be able to run xunit test GetInputFromUser(4);
 
             DoneFunction();
         }
+
+
+      
     }
 }
